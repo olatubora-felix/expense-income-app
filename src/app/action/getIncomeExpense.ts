@@ -2,6 +2,7 @@
 
 import { db } from "@/libs/db";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 async function getIncomeExpense(): Promise<{
   income?: number;
@@ -18,16 +19,17 @@ async function getIncomeExpense(): Promise<{
     const transactions = await db.transaction.findMany({
       where: { userId },
     });
+    const expenses = await db.transaction.findMany({
+      where: { userId, type: "expense" },
+    });
+    const incomes = await db.transaction.findMany({
+      where: { userId, type: "income" },
+    });
 
-    const amounts = transactions.map((transaction) => transaction.amount);
+    const income = incomes.reduce((acc, item) => acc + item.amount, 0);
 
-    const income = amounts
-      .filter((item) => item > 0)
-      .reduce((acc, item) => acc + item, 0);
-
-    const expense = amounts
-      .filter((item) => item < 0)
-      .reduce((acc, item) => acc + item, 0);
+    const expense = expenses.reduce((acc, item) => acc + item.amount, 0);
+    revalidatePath("/");
 
     return { income, expense: Math.abs(expense) };
   } catch (error) {

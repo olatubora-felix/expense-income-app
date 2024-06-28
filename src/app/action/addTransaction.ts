@@ -17,6 +17,7 @@ interface TransactionResult {
 async function addTransaction(formData: FormData): Promise<TransactionResult> {
   const textValue = formData.get("text");
   const amountValue = formData.get("amount");
+  const typeValue = formData.get("type") as string;
 
   // Check for input values
   if (!textValue || textValue === "" || !amountValue) {
@@ -25,6 +26,7 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
 
   const text: string = textValue.toString(); // Ensure text is a string
   const amount: number = parseFloat(amountValue.toString()); // Parse amount as number
+  const type: string = typeValue.toString();
 
   // Get logged in user
   const { userId } = auth();
@@ -40,7 +42,7 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
         text,
         amount,
         userId,
-        type: amount < 0 ? "expense" : "income",
+        type,
       },
     });
 

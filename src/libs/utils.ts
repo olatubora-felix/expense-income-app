@@ -1,3 +1,4 @@
 export function addCommas(x: number): string {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const nairaSymbol = "\u20A6";
+  return `${nairaSymbol} ${x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }

@@ -30,7 +30,7 @@ export const AddTransaction = () => {
           <input type="number" className=' h-[42px]  w-full bg-slate-800 text-white rounded-lg p-3 border-none outline-none ' id="amount" name="amount" placeholder="Enter amount..." step='0.01' />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="amount" className='text-base font-normal text-black'>
+          <label htmlFor="type" className='text-base font-normal text-black'>
             Type
           </label>
           <select className=' h-[42px]  w-full bg-slate-800 text-white rounded-lg p-3 border-none outline-none ' id="type" name="type"  >

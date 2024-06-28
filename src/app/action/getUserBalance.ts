@@ -18,9 +18,18 @@ async function getUserBalance(): Promise<{
       where: { userId },
     });
 
+    // Get Balance
     const balance = transactions.reduce(
-      (sum, transaction) => sum + transaction.amount,
-      0
+      (sum, transaction) => {
+        if (transaction.type === "income") {
+          sum += transaction.amount;
+        } else {
+          sum -= transaction.amount;
+        }
+
+        return sum;
+      },
+      0 // Initialize sum with 0
     );
 
     return { balance };

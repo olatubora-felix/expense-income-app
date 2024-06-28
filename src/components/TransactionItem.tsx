@@ -33,7 +33,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
       <div>
         <p className='text-slate-800 font-semibold text-lg'>{transaction.text}</p>
         <p className={`${transaction.type === 'income' ? ' text-green-500' : ' text-red-500'}`}>
-          {sign}${addCommas(Math.abs(transaction.amount))}
+          {sign}{addCommas(Math.abs(transaction.amount))}
         </p>
         <span className='text-slate-800 font-normal text-sm'>{dayjs(transaction?.createdAt).format('ddd, MMM D, YYYY h:mm A')}</span>
       </div>
